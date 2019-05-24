@@ -51,7 +51,6 @@ typedef NS_ENUM(NSInteger, RecState) {
 @end
 
 typedef void(^errorinfo)(DUErrorHandle *error);
-typedef void(^RecStateDidchange)(RecState recstate);
 @interface ScreenRecordManager : NSObject
 
 + (instancetype)shareManager;
@@ -62,11 +61,6 @@ typedef void(^RecStateDidchange)(RecState recstate);
  是否正在录制中
  */
 @property(nonatomic, assign) BOOL isRecording;
-
-/**
- 录制状态的变化的block
- */
-@property (nonatomic, copy) RecStateDidchange recstatechange;
 
 /**
  录制屏幕
