@@ -24,9 +24,8 @@ ScreenRecorderKit是一个基于ReplayKit封装的轻量级录屏框架。
 设置 ScreenRecordDelegate 代理`[ScreenRecordManager shareManager];
     mgr.screenRecordDelegate = self;`
 
-###3. 开始和结束方法
+###2. 开始和结束方法
 
- 
 开始录制
 
 ```objective-c
