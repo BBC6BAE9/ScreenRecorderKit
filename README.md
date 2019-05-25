@@ -2,7 +2,7 @@
   <img src="https://s2.ax1x.com/2019/05/25/VkQ63T.jpg" title="ScreenRecoderKit">
 </p>
 
-[![Platform](https://img.shields.io/cocoapods/p/RTRootNavigationController.svg?style=flat)](http://cocoapods.org/pods/RTRootNavigationController)
+[![Platform](https://img.shields.io/cocoapods/p/RTRootNavigationController.svg?style=flat)](http://www.bbc6bae9.com/)
 
 # ScreenRecorderKit
 
