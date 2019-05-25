@@ -57,7 +57,7 @@ static ScreenRecordManager *_screenManager = nil;
 
 - (instancetype)init{
     if (self = [super init]) {
-
+        
     }
     return self;
 }
@@ -204,53 +204,72 @@ static ScreenRecordManager *_screenManager = nil;
 #pragma mark -
 //保存视频完成之后的回调 - Private
 - (void)savedPhotoImage:(UIImage*)image didFinishSavingWithError:(NSError *)error contextInfo: (void *)contextInfo {
-
+    
     if (self.screenRecordDelegate && [self.screenRecordDelegate respondsToSelector:@selector(savedPhotoImage: didFinishSavingWithError: contextInfo:)]){
-    
+        
         [self.screenRecordDelegate savedPhotoImage:image didFinishSavingWithError:error contextInfo:contextInfo];
-    
+        
     }
-
-        __block NSData *data;
-        __block BOOL isError; // 判断进入didFinishSavingWithError之后有没有错误
-        if (error) {
-
-            isError = YES;
+    
+    __block NSData *data;
+    __block BOOL isError; // 判断进入didFinishSavingWithError之后有没有错误
+    if (error) {
+        
+        isError = YES;
+        
+    } else {
+        
+        isError = NO;
+        PHFetchOptions *options = [[PHFetchOptions alloc] init];
+        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]]; //按创建日期获取
+        PHFetchResult *assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
+        PHAsset *phasset = [assetsFetchResults lastObject];
+        if (phasset){
+            if (phasset.mediaType == PHAssetMediaTypeVideo) {
+                
+                PHImageManager *manager = [PHImageManager defaultManager];
+                [manager requestAVAssetForVideo:phasset options:nil resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+                    
+                    isError = NO;
+                    AVURLAsset *urlAsset = (AVURLAsset *)asset;
+                    NSURL *videoURL = urlAsset.URL;
+                    data = [NSData dataWithContentsOfURL:videoURL];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        // delegate
+                        if (self.screenRecordDelegate && [self.screenRecordDelegate respondsToSelector:@selector(savedVideoData:didFinishSavingWithError:)]){
+                            
+                            [self.screenRecordDelegate savedVideoData:data didFinishSavingWithError:isError];
+                            
+                        }
+                        
+                    });
+                    
+                }];
+                
+            } else {
+                
+                isError = YES;
+                // delegate
+                if (self.screenRecordDelegate && [self.screenRecordDelegate respondsToSelector:@selector(savedVideoData:didFinishSavingWithError:)]){
+                    
+                    [self.screenRecordDelegate savedVideoData:data didFinishSavingWithError:isError];
+                    
+                }
+            }
             
-        } else {
+        }else{
             
             isError = NO;
-            PHFetchOptions *options = [[PHFetchOptions alloc] init];
-            options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]]; //按创建日期获取
-            PHFetchResult *assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
-            PHAsset *phasset = [assetsFetchResults lastObject];
-            if (phasset) {
-                if (phasset.mediaType == PHAssetMediaTypeVideo) {
-        
-                    PHImageManager *manager = [PHImageManager defaultManager];
-                    [manager requestAVAssetForVideo:phasset options:nil resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-                        
-                        isError = NO;
-                        AVURLAsset *urlAsset = (AVURLAsset *)asset;
-                        NSURL *videoURL = urlAsset.URL;
-                        data = [NSData dataWithContentsOfURL:videoURL];
-
-                    }];
-                   
-                } else {
-                    
-                    isError = YES;
-
-                }
+            // delegate
+            if (self.screenRecordDelegate && [self.screenRecordDelegate respondsToSelector:@selector(savedVideoData:didFinishSavingWithError:)]){
+                
+                [self.screenRecordDelegate savedVideoData:data didFinishSavingWithError:isError];
                 
             }
             
         }
-    
-    // delegate
-    if (self.screenRecordDelegate && [self.screenRecordDelegate respondsToSelector:@selector(savedVideoData:didFinishSavingWithError:)]){
-        
-        [self.screenRecordDelegate savedVideoData:data didFinishSavingWithError:isError];
         
     }
     
@@ -299,7 +318,7 @@ static ScreenRecordManager *_screenManager = nil;
         
         RecState state = RecState_Stop;
         [self.screenRecordDelegate recStateDidChange:state withError: NULL];
-
+        
     }
     
 }
@@ -313,24 +332,24 @@ static ScreenRecordManager *_screenManager = nil;
 #pragma mark - Setter
 - (void)setIsRecording:(BOOL)isRecording{
     _isRecording = isRecording;
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-     
-            if (self.screenRecordDelegate && [self.screenRecordDelegate respondsToSelector:@selector(recStateDidChange:withError:)]){
-                RecState state;
-                if (isRecording) {
-                    
-                    state = RecState_Rec;
-                    
-                }else{
-                    
-                    state = RecState_Stop;
-
-                }
+        
+        if (self.screenRecordDelegate && [self.screenRecordDelegate respondsToSelector:@selector(recStateDidChange:withError:)]){
+            RecState state;
+            if (isRecording) {
                 
-                [self.screenRecordDelegate recStateDidChange:state withError: NULL];
+                state = RecState_Rec;
+                
+            }else{
+                
+                state = RecState_Stop;
                 
             }
+            
+            [self.screenRecordDelegate recStateDidChange:state withError: NULL];
+            
+        }
         
     });
     
