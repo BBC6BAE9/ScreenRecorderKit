@@ -1,5 +1,5 @@
 <p align="center" >
-  <img src="https://imgchr.com/i/VkQ63T" title="ScreenRecoderKit">
+  <img src="https://s2.ax1x.com/2019/05/25/VkQ63T.jpg" title="ScreenRecoderKit">
 </p>
 
 [![Build Status](https://travis-ci.org/AFNetworking/AFNetworking.svg)](https://travis-ci.org/AFNetworking/AFNetworking)
