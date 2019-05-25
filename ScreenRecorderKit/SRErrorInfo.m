@@ -1,14 +1,14 @@
 //
-//  DUErrorInfo.m
+//  SRErrorInfo.m
 //  Duobiao
 //
-//  Created by 黄洪 on 2018/8/13.
-//  Copyright © 2018年 北京夺镖文化有限公司. All rights reserved.
+//  Created by huang on 2019/5/25.
+//  Copyright © 2019 北京夺镖文化有限公司. All rights reserved.
 //
 
-#import "DUErrorInfo.h"
+#import "SRErrorInfo.h"
 
-@implementation DUErrorInfo
+@implementation SRErrorInfo
 @synthesize code;
 @synthesize msg;
 @synthesize isError;

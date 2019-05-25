@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DUErrorHandle.h"
-#import "DUErrorInfo.h"
+#import "SRErrorHandle.h"
+#import "SRErrorInfo.h"
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, RecState) {
 
 @end
 
-typedef void(^errorinfo)(DUErrorHandle *error);
+typedef void(^srerrorinfo)(SRErrorHandle *error);
 @interface ScreenRecordManager : NSObject
 
 + (instancetype)shareManager;
@@ -68,7 +68,7 @@ typedef void(^errorinfo)(DUErrorHandle *error);
  @param suc 成功回调
  @param errorInfo 错误信息
  */
-- (void)screenRecSuc:(void (^)(void))suc failure:(errorinfo)errorInfo;
+- (void)screenRecSuc:(void (^)(void))suc failure:(srerrorinfo)errorInfo;
 
 /**
  停止录制屏幕
@@ -76,7 +76,7 @@ typedef void(^errorinfo)(DUErrorHandle *error);
  @param suc 成功回调
  @param errorInfo 错误信息
  */
-- (void)stopRecSuc:(void (^)(void))suc failure:(errorinfo)errorInfo;
+- (void)stopRecSuc:(void (^)(void))suc failure:(srerrorinfo)errorInfo;
 
 @end
 

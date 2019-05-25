@@ -63,7 +63,7 @@ static ScreenRecordManager *_screenManager = nil;
 }
 
 // 开始录制屏幕
-- (void)screenRecSuc:(void (^)(void))suc failure:(errorinfo)errorInfo{
+- (void)screenRecSuc:(void (^)(void))suc failure:(srerrorinfo)errorInfo{
     
     kWeakSelf(self);
     RPScreenRecorder* recorder = RPScreenRecorder.sharedRecorder;
@@ -74,7 +74,7 @@ static ScreenRecordManager *_screenManager = nil;
     
     if ([version doubleValue] < 9.0) {
         
-        DUErrorHandle *err = [[DUErrorHandle alloc] init];
+        SRErrorHandle *err = [[SRErrorHandle alloc] init];
         err.code = -4;
         err.msg = @"iOS9.0之后的系统才可以使用录屏功能";
         errorInfo(err);
@@ -86,7 +86,7 @@ static ScreenRecordManager *_screenManager = nil;
         
         if (recorder.isRecording) { // 正在录制中不能在录制了
             
-            DUErrorHandle *err = [[DUErrorHandle alloc] init];
+            SRErrorHandle *err = [[SRErrorHandle alloc] init];
             err.code = -1;
             err.msg = @"录屏正在进行，无法再次开启录屏功能";
             errorInfo(err);
@@ -108,7 +108,7 @@ static ScreenRecordManager *_screenManager = nil;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     weakself.isRecording = NO;
-                    DUErrorHandle *err = [[DUErrorHandle alloc] initWithError:error];
+                    SRErrorHandle *err = [[SRErrorHandle alloc] initWithError:error];
                     errorInfo(err);
                     
                 });
@@ -119,7 +119,7 @@ static ScreenRecordManager *_screenManager = nil;
             if (recorder.isRecording) { // 正在录制中不能在录制了
                 
                 weakself.isRecording = NO;
-                DUErrorHandle *err = [[DUErrorHandle alloc] init];
+                SRErrorHandle *err = [[SRErrorHandle alloc] init];
                 err.code = -1;
                 err.msg = @"正在录制中";
                 errorInfo(err);
@@ -140,7 +140,7 @@ static ScreenRecordManager *_screenManager = nil;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
                         weakself.isRecording = NO;
-                        DUErrorHandle *err = [[DUErrorHandle alloc] initWithError:error];
+                        SRErrorHandle *err = [[SRErrorHandle alloc] initWithError:error];
                         errorInfo(err);
                         
                     });
@@ -155,13 +155,13 @@ static ScreenRecordManager *_screenManager = nil;
 }
 
 // 停止录制屏幕
-- (void)stopRecSuc:(void (^)(void))suc failure:(errorinfo)errorInfo{
+- (void)stopRecSuc:(void (^)(void))suc failure:(srerrorinfo)errorInfo{
     
     NSLog(@"结束开始");
     kWeakSelf(self);
     if (!RPScreenRecorder.sharedRecorder.isRecording) {
         
-        DUErrorHandle *err = [[DUErrorHandle alloc] init];
+        SRErrorHandle *err = [[SRErrorHandle alloc] init];
         err.code = -2;
         err.msg = @"没有正在录制的进程";
         errorInfo(err);
@@ -173,7 +173,7 @@ static ScreenRecordManager *_screenManager = nil;
             if (error) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    DUErrorHandle *err = [[DUErrorHandle alloc] initWithError:error];
+                    SRErrorHandle *err = [[SRErrorHandle alloc] initWithError:error];
                     errorInfo(err);
                 });
                 
