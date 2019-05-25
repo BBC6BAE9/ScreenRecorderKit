@@ -1,5 +1,5 @@
 # ScreenRecorderKit
-
+[![VkQ63T.md.jpg](https://s2.ax1x.com/2019/05/25/VkQ63T.md.jpg)](https://imgchr.com/i/VkQ63T)
 [![CI Status](http://img.shields.io/travis/rickytan/RTRootNavigationController.svg?style=flat)](https://travis-ci.org/rickytan/RTRootNavigationController)
 [![License](https://img.shields.io/cocoapods/l/RTRootNavigationController.svg?style=flat)](http://cocoapods.org/pods/RTRootNavigationController)
 [![Platform](https://img.shields.io/cocoapods/p/RTRootNavigationController.svg?style=flat)](http://cocoapods.org/pods/RTRootNavigationController)
@@ -18,13 +18,13 @@ ScreenRecorderKit是一个基于ReplayKit封装的轻量级录屏框架。
 
 ## 使用
 
-###1. 引用
+1. 引用
 在你需要调用录屏功能的地方`ScreenRecordManager.h`
 
 设置 ScreenRecordDelegate 代理`[ScreenRecordManager shareManager];
     mgr.screenRecordDelegate = self;`
 
-###2. 开始和结束方法
+2. 开始和结束方法
 
 开始录制
 
@@ -63,7 +63,7 @@ ScreenRecorderKit是一个基于ReplayKit封装的轻量级录屏框架。
         }];     
 ```
 
-###3. 代理方法
+3. 代理方法
 `ScreenRecordManager`的录制状态发生了改变
 
 ```objective-c
