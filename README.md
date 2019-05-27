@@ -13,6 +13,8 @@
 ## 介绍
 
 ScreenRecorderKit是一个基于ReplayKit封装的轻量级录屏框架。
+WWDC关于Replaykit的部分参考：[Go Live with ReplayKit](https://developer.apple.com/videos/play/wwdc2016/601/)
+
 
 本框架帮助开发者以一种更简单的方式处理App间的录屏冲突，App与系统之间的录屏冲突，以及其他异常的提示。并且可以保存到系统相册，代理方法里面可以获取到录屏视频的NSData数据，方便沙盒存储或者上传服务器。
 
