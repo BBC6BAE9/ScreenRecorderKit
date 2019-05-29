@@ -7,6 +7,11 @@
 # ScreenRecorderKit
 
 ## 注意
+现已支持cocoasPods 
+```objective-c
+pod "ScreenRecorderKit"
+```
+
 * 注意在开始录屏之前要先获取“图片”的权限，否则回导致，所有接口回调都会正常，但是回调方法中的NSData为空。后续的将权限的判断和索取加入到框架中
 * 如果最近有时间的画也会把录屏直播的东西加入进来
 
